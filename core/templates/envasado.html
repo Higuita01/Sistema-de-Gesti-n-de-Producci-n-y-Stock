@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Envasado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial; background:#F5F5F5; padding:20px; }
+        .card { background:white; padding:15px; margin-bottom:10px;
+                border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+        input, select { width:100%; padding:10px; margin:5px 0; }
+        button { width:100%; padding:12px; background:#1976D2;
+                 color:white; border:none; border-radius:6px; }
+        table { width:100%; border-collapse: collapse; }
+        th, td { border:1px solid #ddd; padding:8px; text-align:center; }
+        th { background:#eee; }
+        .error { color:red; margin-bottom:10px; }
+    </style>
+</head>
+<body>
+
+<h2>📦 Envasado</h2>
+<a href="/home/">⬅ Volver</a>
+
+{% for message in messages %}
+<div class="error">{{ message }}</div>
+{% endfor %}
+
+<div class="card">
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="date" name="fecha" required>
+
+        <input type="text" name="nombre" placeholder="Nombre del operario" required>
+
+        <select name="tipo">
+            <option value="60">60</option>
+            <option value="68">68</option>
+            <option value="120">120</option>
+            <option value="CRISTIx60">CRISTIx60</option>
+        </select>
+
+        <select name="categoria">
+            <option value="buena">Buena</option>
+            <option value="mala">Mala</option>
+            <option value="especial">Especial</option>
+        </select>
+
+        <input type="number" name="cantidad" placeholder="Cantidad a usar" required>
+
+        <button type="submit">➖ Usar del Stock</button>
+    </form>
+</div>
+
+<h3>📊 Movimientos de Envasado</h3>
+
+<table>
+    <tr>
+        <th>Fecha</th>
+        <th>Tipo</th>
+        <th>Operario</th>
+        <th>Categoría</th>
+        <th>Cantidad</th>
+    </tr>
+
+    {% for e in datos %}
+<tr>
+    <td>{{ e.fecha|date:"d/m/Y" }}</td>
+    <td>{{ e.tipo }}</td>
+    <td>{{ e.nombre_operario }}</td>
+    <td>{{ e.categoria }}</td>
+    <td>{{ e.cantidad }}</td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="5">No hay movimientos aún.</td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>

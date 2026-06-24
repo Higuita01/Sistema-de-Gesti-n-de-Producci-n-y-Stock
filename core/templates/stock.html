@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #F5F5F5;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #1976D2;
+            color: white;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #1976D2;
+        }
+    </style>
+</head>
+
+<body>
+
+<a href="{% url 'home' %}" class="volver">⬅ Volver</a>
+
+<h2>📦 Stock por Operario</h2>
+
+<table>
+    <tr>
+        <th>Operario</th>
+        <th>Tipo</th>
+        <th>Buenas</th>
+        <th>Malas</th>
+        <th>Especiales</th>
+    </tr>
+
+    {% for s in stock_operario %}
+    <tr>
+        <td>{{ s.nombre_operario }}</td>
+        <td>{{ s.tipo }}</td>
+        <td>{{ s.buenas }}</td>
+        <td>{{ s.malas }}</td>
+        <td>{{ s.especiales }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No hay stock disponible</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<h2>📊 Totales por Tipo de Vela</h2>
+
+<table>
+    <tr>
+        <th>Tipo</th>
+        <th>Total Buenas</th>
+        <th>Total Malas</th>
+        <th>Total Especiales</th>
+    </tr>
+
+    {% for t in totales %}
+    <tr>
+        <td>{{ t.tipo }}</td>
+        <td>{{ t.total_buenas }}</td>
+        <td>{{ t.total_malas }}</td>
+        <td>{{ t.total_especiales }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No hay datos</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

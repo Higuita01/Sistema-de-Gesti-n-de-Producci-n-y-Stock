@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Palets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial; background:#F5F5F5; padding:20px; }
+        table { width:100%; border-collapse: collapse; background:white; }
+        th, td { border:1px solid #ddd; padding:8px; text-align:center; }
+        th { background:#1976D2; color:white; }
+        input, select { width:100%; padding:10px; margin:5px 0; }
+        button { width:100%; padding:10px; background:#2e7d32; color:white; border:none; }
+        .card { background:white; padding:15px; margin-bottom:20px; border-radius:10px; }
+    </style>
+</head>
+<body>
+
+<h2>📦 Registro de Palets</h2>
+<a href="/home/">⬅ Volver</a>
+
+<div class="card">
+    <form method="POST">
+        {% csrf_token %}
+
+        <select name="tipo" required>
+            <option value="60">60</option>
+            <option value="68">68</option>
+            <option value="120">120</option>
+            <option value="CRISTIx60">CRISTIx60</option>
+        </select>
+
+        <input type="text" name="lote" placeholder="Número de lote" required>
+
+        <button type="submit">➕ Agregar 1 Palet</button>
+    </form>
+</div>
+
+<h3>📊 Palets en Depósito</h3>
+
+<table>
+    <tr>
+        <th>Tipo</th>
+        <th>Lote</th>
+        <th>Cantidad</th>
+    </tr>
+
+    {% for p in lista %}
+    <tr>
+        <td>{{ p.tipo }}</td>
+        <td>{{ p.lote }}</td>
+        <td>{{ p.cajas }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">No hay palets cargados.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

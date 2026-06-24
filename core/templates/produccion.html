@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Producción</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body { font-family: Arial; background:#F5F5F5; padding:20px; }
+
+        .card {
+            background:white;
+            padding:15px;
+            margin-bottom:10px;
+            border-radius:10px;
+            box-shadow:0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        input, select {
+            width:100%;
+            padding:10px;
+            margin:5px 0;
+        }
+
+        button {
+            width:100%;
+            padding:12px;
+            background:#1976D2;
+            color:white;
+            border:none;
+            border-radius:6px;
+        }
+
+        a {
+            display:block;
+            margin-bottom:10px;
+            text-decoration:none;
+            color:#1976D2;
+        }
+
+        table {
+            width:100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border:1px solid #ddd;
+            padding:8px;
+            text-align:center;
+        }
+
+        th { background:#eee; }
+    </style>
+</head>
+
+<body>
+
+<h2>📦 Producción</h2>
+
+<a href="/home/">⬅ Volver al Home</a>
+
+<div class="card">
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="date" name="fecha" required>
+
+        <input type="text" name="nombre" placeholder="Nombre del operario" required>
+
+        <select name="tipo">
+            <option value="60">60</option>
+            <option value="68">68</option>
+            <option value="120">120</option>
+            <option value="CRISTIx60">CRISTIx60</option>
+        </select>
+
+        <input type="number" name="buenas" placeholder="Buenas" value="0">
+        <input type="number" name="malas" placeholder="Malas" value="0">
+        <input type="number" name="especiales" placeholder="Especiales" value="0">
+
+        <button type="submit">➕ Agregar Producción</button>
+    </form>
+</div>
+
+<h3>📊 Registros de Producción</h3>
+
+<table>
+    <tr>
+    <th>Fecha</th>
+    <th>Operario</th>
+    <th>Tipo</th>
+    <th>Buenas</th>
+    <th>Malas</th>
+    <th>Especiales</th>
+    <th>Total</th>
+</tr>
+
+{% for p in datos %}
+<tr>
+    <td>{{ p.fecha|date:"d/m/Y" }}</td>
+    <td>{{ p.nombre_operario }}</td>
+    <td>{{ p.tipo }}</td>
+    <td>{{ p.buenas }}</td>
+    <td>{{ p.malas }}</td>
+    <td>{{ p.especiales }}</td>
+    <td>{{ p.buenas|add:p.malas|add:p.especiales }}</td>
+</tr>
+    {% empty %}
+    <tr>
+        <td colspan="7">No hay registros</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

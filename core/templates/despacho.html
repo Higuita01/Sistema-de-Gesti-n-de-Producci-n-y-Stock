@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Despacho</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body { font-family: Arial; background:#F5F5F5; padding:20px; }
+        .card { background:white; padding:15px; margin-bottom:10px; border-radius:10px; }
+        input, select { width:100%; padding:10px; margin:5px 0; }
+        button { width:100%; padding:12px; background:#d32f2f; color:white; border:none; }
+        .msg { margin-bottom:10px; font-weight:bold; }
+    </style>
+</head>
+
+<body>
+
+<h2>🚚 Despacho</h2>
+<a href="/home/">⬅ Volver</a>
+
+{% if mensaje %}
+<div class="msg">{{ mensaje }}</div>
+{% endif %}
+
+<div class="card">
+    <form method="POST">
+        {% csrf_token %}
+
+        <select name="tipo" required>
+            <option value="60">60</option>
+            <option value="68">68</option>
+            <option value="120">120</option>
+            <option value="CRISTIx60">CRISTIx60</option>
+        </select>
+
+        <input type="text" name="lote" placeholder="Número de lote" required>
+
+        <input type="number" name="cantidad" placeholder="Cantidad a despachar" required>
+
+        <button type="submit">🚚 Despachar</button>
+    </form>
+</div>
+
+</body>
+</html>
